@@ -16,4 +16,12 @@ public interface SlackErrorResponseIF extends SlackResponse {
   @Nullable  JsonNode getJson();
   Optional<SlackError> getError();
   List<SlackError> getErrors();
+
+  /**
+   * This method just gives you one
+   * "primary" error, abstracting away the details that the error can be either singular or plural.
+   */
+  default SlackError getPrimaryError() {
+    return getError().orElseGet(() -> getErrors().get(0));
+  }
 }
